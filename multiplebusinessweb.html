@@ -1,0 +1,2461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Meridian Works — One Studio. Three Trades.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    a { text-decoration: none; color: inherit; }
+    input, textarea { font-family: inherit; }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 4px; }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -200% 0; }
+      100% { background-position: 200% 0; }
+    }
+
+    @keyframes fadeInImg {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(100%); }
+      to { transform: translateX(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 900px) {
+      .desktop-sidebar { display: none !important; }
+      .mobile-topbar { display: flex !important; }
+      .main-shell { padding-left: 0 !important; }
+    }
+    @media (min-width: 901px) {
+      .mobile-topbar { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    /* =========================================================
+       ★★★  CUSTOM IMAGES  ★★★
+       ========================================================= */
+
+    const BRAND_LOGOS = {
+      pizza: "pizzaimage.png",
+      fit:   "kineticimage.png",
+      skin:  "lumeaimage.png",
+    };
+
+    /* =========================================================
+       ★★★  DIVISION HOME CONFIG  ★★★
+       ========================================================= */
+
+    const DIVISION_CONFIG = {
+      /* ---------- BRUNO'S (pizza) ---------- */
+      pizza: {
+        home: {
+          eyebrow: "Naples · Since 1998",
+          heroTitle: "Naples in every bite.",
+          heroTitleItalic: "every",
+          heroSubtitle:
+            "Wood-fired pizza, handmade pasta, and a wine list from the slopes of Vesuvius. Family-run since 1998.",
+          primaryButton: "Reserve a table",
+          secondaryButton: "Open Cart",
+          featured: {
+            image: "Gemini_Generated_Image_2dooki2dooki2doo.png",
+            tag: "Pizza of the Week",
+            title: "Veggie Supreme Pizza",
+            description:
+              "A colorful combination of capsicum, onions, sweet corn, tomatoes, and black olives topped with gooey cheese.",
+            price: "₹240",
+            size: '12"',
+            offsetX: 10,
+            offsetY: 30,
+            zoom: 0.8,
+          },
+          sectionEyebrow: "Signature Pizzas",
+
+          dishes: [
+            {
+              n: "Chicken Dominator Pizza",
+              tag: "Non-Veg",
+              d: "A hearty chicken-loaded pizza featuring flavorful chicken chunks, savory toppings, rich tomato sauce, and melted cheese.",
+              p: "₹280",
+              img: "chickenpizza1.png",
+            },
+            {
+              n: "Farmhouse Pizza",
+              tag: "Veg",
+              d: "Loaded with fresh onions, capsicum, juicy tomatoes, mushrooms, and melted mozzarella cheese on a flavorful pizza base.",
+              p: "₹220",
+              img: "vegpizza1.png",
+            },
+            {
+              n: "Peppy Paneer Pizza",
+              tag: "Veg",
+              d: "Soft paneer cubes, crunchy capsicum, and spicy seasoning come together with tangy sauce and gooey mozzarella cheese.",
+              p: "₹240",
+              img: "vegpizza2.png",
+            },
+          ],
+          infoCards: [
+            { t: "Open 7 Days", d: "Mon–Thu 11–10 · Fri–Sat 11–11 · Sun 12–9" },
+            { t: "Wood-Fired Oven", d: "Imported from Naples. 900°F. 90 seconds per pie." },
+            { t: "Family Owned", d: "Three generations. Same recipes. Same street corner." },
+          ],
+        },
+
+        pages: {
+          "Our Story": [
+            {
+              n: "Born in Naples",
+              d: "Our first wood-fired oven was lit in 1998 on a narrow street in Naples, where our founder learned to stretch dough by feel, not by measure.",
+            },
+            {
+              n: "The Family Recipes",
+              d: "Every sauce, every crust, every meatball comes from a recipe passed down three generations. Nothing has changed — and nothing ever will.",
+            },
+            {
+              n: "The Move to India",
+              d: "In 2012, we brought our ovens and our recipes to India. Same flour, same fire, same obsession with doing things the slow way.",
+            },
+            {
+              n: "The Wood-Fired Oven",
+              d: "Our oven was shipped from Naples and reassembled brick by brick. It burns at 900°F and bakes a perfect Neapolitan pie in 90 seconds.",
+            },
+            {
+              n: "Our Ingredients",
+              d: "San Marzano tomatoes, fior di latte mozzarella, and 00 flour imported from Italy. The rest we source fresh, locally, every morning.",
+            },
+            {
+              n: "Three Generations Later",
+              d: "Still family-run. Still slow. Still the same corner. We're not trying to be the biggest pizzeria — just the one you keep coming back to.",
+            },
+          ],
+          "Locations": [
+            { n: "Mumbai — Bandra", d: "Our flagship location on Linking Road." },
+            { n: "Delhi — Hauz Khas", d: "Our second home, in the heart of South Delhi." },
+            { n: "Bangalore — Indiranagar", d: "Wood-fired pizza in the garden city." },
+            { n: "Pune — Koregaon Park", d: "Cosy corner spot with a full wine list." },
+            { n: "Goa — Anjuna", d: "Beachside pizzeria, open till late." },
+            { n: "Kolkata — Park Street", d: "Our newest outpost, opened in 2024." },
+          ],
+          "Reservations": [
+            { n: "Book Online", d: "Reserve your table in under 60 seconds via our online form." },
+            { n: "Walk-ins Welcome", d: "No reservation? No problem — we keep seats open every night." },
+            { n: "Private Dining", d: "Book our private room for groups of 8–24 guests." },
+            { n: "Special Occasions", d: "Birthdays, anniversaries, proposals — tell us and we'll make it special." },
+            { n: "Cancellation Policy", d: "Free cancellation up to 2 hours before your booking." },
+            { n: "Large Parties", d: "For parties over 12, please call us directly to arrange." },
+          ],
+        },
+      },
+
+      /* ---------- KINETIC (fit) ---------- */
+      fit: {
+        home: {
+          eyebrow: "",
+          heroTitle: "Train like your life depends on it.",
+          heroTitleAccent: "life",
+          heroSubtitle:
+            "Strength, conditioning, and mobility for athletes who take their training seriously.",
+          primaryButton: "Start training",
+          secondaryButton: "See schedule",
+          statTop: {
+            label: "Sessions / Week",
+            value: "47",
+            sub: "Coach-led sessions every week.",
+          },
+          statBottom: {
+            label: "Members",
+            value: "1,200+",
+            sub: "From beginners to elite.",
+          },
+          sectionEyebrow: "Programs",
+          programs: [
+            { t: "Strength", d: "Barbell-based progressive overload.", n: "01" },
+            { t: "Conditioning", d: "Metabolic circuits and intervals.", n: "02" },
+            { t: "Mobility", d: "Movement quality and recovery.", n: "03" },
+            { t: "Endurance", d: "Long-form aerobic development.", n: "04" },
+          ],
+          cta: {
+            tagline: "Ready?",
+            headline: "First session is on us.",
+            button: "Start Now",
+          },
+        },
+
+        pages: {
+          "Coaches": [
+            {
+              n: "Marcus Webb",
+              role: "Head Coach — Strength",
+              d: "Former national-level powerlifter with 12 years of coaching experience. Specializes in barbell mechanics, progressive overload, and building durable strength that lasts.",
+            },
+            {
+              n: "Elena Rossi",
+              role: "Conditioning Coach",
+              d: "Endurance athlete and conditioning specialist. Designs metabolic circuits that push your engine without breaking your body. Certified in both HIIT and long-form aerobic work.",
+            },
+            {
+              n: "Priya Sharma",
+              role: "Mobility & Recovery Coach",
+              d: "Physical therapist turned coach. Helps athletes move better, recover faster, and stay injury-free. Her mobility sessions are the most requested on our schedule.",
+            },
+            {
+              n: "Daniel Harrington",
+              role: "Performance Coach",
+              d: "Works with competitive athletes across multiple sports. Focuses on sport-specific training, speed development, and peak performance preparation.",
+            },
+            {
+              n: "Sarah Okafor",
+              role: "Nutrition Coach",
+              d: "Registered dietitian and sports nutritionist. Builds personalized fueling strategies that support training, recovery, and body composition goals.",
+            },
+            {
+              n: "James Liu",
+              role: "Founder & Head of Programming",
+              d: "Founded Kinetic in 2016 after a decade of coaching. Oversees all program design and mentors the coaching team. Believes in simple principles done consistently well.",
+            },
+          ],
+
+          "Programs": [
+            {
+              n: "Barbell Strength",
+              d: "12 weeks · 4 sessions/week",
+              role: "Strength Program",
+              long: "A structured barbell program built around the squat, bench, deadlift, and press. Progressive overload with autoregulated intensity. Perfect for lifters who want to add real weight to the bar without breaking down.",
+            },
+            {
+              n: "Metabolic Conditioning",
+              d: "8 weeks · 3 sessions/week",
+              role: "Conditioning Program",
+              long: "High-intensity intervals paired with longer aerobic work. Improves VO2 max, work capacity, and recovery speed. Designed for athletes who need to perform across multiple energy systems.",
+            },
+            {
+              n: "Mobility Reset",
+              d: "6 weeks · 5 sessions/week",
+              role: "Mobility Program",
+              long: "Daily 20-minute mobility flows that target the hips, shoulders, and thoracic spine. Ideal for desk workers, runners, and anyone who feels stiff and restricted in their training.",
+            },
+            {
+              n: "Endurance Builder",
+              d: "16 weeks · 5 sessions/week",
+              role: "Endurance Program",
+              long: "A long-form aerobic development plan for runners, cyclists, and triathletes. Mixes zone-2 base work with threshold intervals and race-pace efforts. Peaks for a target event.",
+            },
+            {
+              n: "Hybrid Athlete",
+              d: "10 weeks · 5 sessions/week",
+              role: "Hybrid Program",
+              long: "Strength and conditioning in one program. Two heavy lifting days, two conditioning days, and one long aerobic session per week. Built for athletes who refuse to specialize.",
+            },
+            {
+              n: "Foundations",
+              d: "4 weeks · 3 sessions/week",
+              role: "Beginner Program",
+              long: "The perfect starting point. Teaches the fundamental movement patterns, builds a base of general fitness, and prepares you for any of our advanced programs. No experience required.",
+            },
+          ],
+        },
+      },
+
+      /* ---------- LUMEA (skin) ---------- */
+      skin: {
+        home: {
+          eyebrow: "Est. 2018 — Portland",
+          heroTitle: "Skin, as it was meant to be.",
+          heroSubtitle:
+            "A small studio offering facial treatments, herbal rituals, and hand-blended products made in-house.",
+          primaryButton: "Book a treatment",
+          secondaryButton: "Browse products",
+          season: {
+            img: "winter-restore.png",
+            tag: "This Season",
+            title: "The Winter Restore Ritual",
+            description:
+              "A 90-minute facial designed for cold months — warming herbs, deep hydration, and quiet.",
+            link: "Now booking →",
+          },
+          sectionEyebrow: "Signature Treatments",
+          treatments: [
+            {
+              t: "The Foundational Facial",
+              d: "60 min · Deep cleanse, exfoliation, hydration",
+              p: "₹1200",
+              img: "foundational-facial.png",
+            },
+            {
+              t: "Herbal Steam Ritual",
+              d: "75 min · Steam, mask, lymphatic massage",
+              p: "₹1500",
+              img: "herbal-steam.png",
+            },
+            {
+              t: "Winter Restore",
+              d: "90 min · Warming herbs, deep hydration",
+              p: "₹1800",
+              img: "winter-restore.png",
+            },
+          ],
+          products: [
+            { n: "Rosehip Oil",      img: "rosehip-oil.png" },
+            { n: "Calendula Balm",   img: "calendula-balm.png" },
+            { n: "Chamomile Mist",   img: "chamomile-mist.png" },
+            { n: "Sea Salt Polish",  img: "sea-salt-polish.png" },
+          ],
+        },
+
+        pages: {
+          "Treatments": [
+            {
+              n: "The Foundational Facial",
+              d: "60 min · Deep cleanse, exfoliation, hydration · ₹1200",
+              long: "Our signature 60-minute facial. Includes a deep double cleanse, gentle exfoliation, extractions if needed, a customized mask, and a finishing hydration ritual. Perfect for first-time visitors.",
+            },
+            {
+              n: "Herbal Steam Ritual",
+              d: "75 min · Steam, mask, lymphatic massage · ₹1500",
+              long: "A deeply relaxing treatment that begins with an herbal steam session to open the pores, followed by a clay mask, lymphatic drainage massage, and a cooling botanical mist. Great for congested or tired skin.",
+            },
+            {
+              n: "Winter Restore",
+              d: "90 min · Warming herbs, deep hydration · ₹1800",
+              long: "Our most indulgent treatment, designed for cold months. Warming herbs, an intensive hydration mask, scalp massage, and a final layer of protective balm. You'll leave glowing, calm, and deeply nourished.",
+            },
+          ],
+        },
+      },
+    };
+
+    /* =========================================================
+       ★★★  NAV ICONS — INLINE SVG COMPONENTS  ★★★
+       ========================================================= */
+
+    // ---- Pizza icons ----
+    const IconPizzaHome = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 10.5 L12 3 L21 10.5" />
+        <path d="M5 12 L5 20 L19 20 L19 12" />
+        <path d="M10 20 L10 15 L14 15 L14 20" />
+      </svg>
+    );
+    const IconPizzaMenu = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="5" y="3" width="14" height="18" rx="1.5" />
+        <path d="M8 8 L10 10 L13 7" />
+        <path d="M14 8.5 L17 8.5" />
+        <path d="M8 13 L10 15 L13 12" />
+        <path d="M14 13.5 L17 13.5" />
+        <path d="M8 18 L17 18" />
+      </svg>
+    );
+    const IconPizzaStory = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4 5 C4 5 7 3.5 12 5 C17 6.5 20 5 20 5 L20 19 C20 19 17 20.5 12 19 C7 17.5 4 19 4 19 Z" />
+        <path d="M12 5 L12 19" />
+      </svg>
+    );
+    const IconPizzaLocation = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 21 C12 21 19 14.5 19 9 A7 7 0 0 0 5 9 C5 14.5 12 21 12 21 Z" />
+        <circle cx="12" cy="9" r="2.5" />
+      </svg>
+    );
+    const IconPizzaReservation = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3.5" y="5" width="17" height="15" rx="2" />
+        <path d="M3.5 10 L20.5 10" />
+        <path d="M8 3 L8 6" />
+        <path d="M16 3 L16 6" />
+        <path d="M8 14 L10 16 L16 12" />
+      </svg>
+    );
+
+    // ---- Fitness icons ----
+    const IconFitHome = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 10.5 L12 3 L21 10.5" />
+        <path d="M5 12 L5 20 L19 20 L19 12" />
+      </svg>
+    );
+    const IconFitPrograms = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="5" y="3" width="14" height="18" rx="1.5" />
+        <path d="M8 8 L10 10 L13 7" />
+        <path d="M14 8.5 L17 8.5" />
+        <path d="M8 13 L10 15 L13 12" />
+        <path d="M14 13.5 L17 13.5" />
+        <path d="M8 18 L17 18" />
+      </svg>
+    );
+    const IconFitCoaches = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="4" width="16" height="17" rx="2" />
+        <rect x="9" y="2" width="6" height="4" rx="1" />
+        <circle cx="10" cy="11" r="1.4" />
+        <path d="M6 18 C6 15.5 7.8 13.5 10 13.5 C12.2 13.5 14 15.5 14 18" />
+        <path d="M16 12 L18 10" />
+      </svg>
+    );
+    const IconFitMembership = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="6" width="18" height="13" rx="2" />
+        <circle cx="9" cy="12" r="2" />
+        <path d="M6 16 C6 14.5 7.3 13.5 9 13.5 C10.7 13.5 12 14.5 12 16" />
+        <path d="M14 10 L18 10" />
+        <path d="M14 13 L18 13" />
+      </svg>
+    );
+    const IconFitSchedule = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3.5" y="5" width="15" height="15" rx="2" />
+        <path d="M3.5 10 L18.5 10" />
+        <path d="M8 3 L8 6" />
+        <path d="M14 3 L14 6" />
+        <circle cx="18" cy="18" r="4" />
+        <path d="M18 16 L18 18 L19.5 19.5" />
+      </svg>
+    );
+
+    // ---- Skincare icons ----
+    const IconSkinHome = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 10.5 L12 3 L21 10.5" />
+        <path d="M5 12 L5 20 L19 20 L19 12" />
+      </svg>
+    );
+    const IconSkinTreatments = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3 C12 3 6 9.5 6 14 A6 6 0 0 0 18 14 C18 9.5 12 3 12 3 Z" />
+        <path d="M9 14 C9.5 15.5 10.5 16.5 12 17" />
+      </svg>
+    );
+    const IconSkinProducts = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="8" y="9" width="8" height="11" rx="1.5" />
+        <path d="M10 9 L10 6 L14 6 L14 9" />
+        <path d="M10 4 L14 4" />
+        <path d="M11 13 L13 13" />
+      </svg>
+    );
+    const IconSkinRituals = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 3 L12 8" />
+        <path d="M8 8 C8 8 6 10.5 6 13 A6 6 0 0 0 18 13 C18 10.5 16 8 16 8 Z" />
+        <path d="M10 14 L14 14" />
+      </svg>
+    );
+    const IconSkinBook = () => (
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="4" y="5" width="16" height="16" rx="2" />
+        <path d="M4 10 L20 10" />
+        <path d="M8 3 L8 6" />
+        <path d="M16 3 L16 6" />
+        <path d="M9 14 L11 16 L15 12" />
+      </svg>
+    );
+
+    const NAV_ICONS = {
+      pizza: {
+        "Home":         IconPizzaHome,
+        "Menu":         IconPizzaMenu,
+        "Our Story":    IconPizzaStory,
+        "Locations":    IconPizzaLocation,
+        "Reservations": IconPizzaReservation,
+      },
+      fit: {
+        "Home":       IconFitHome,
+        "Programs":   IconFitPrograms,
+        "Coaches":    IconFitCoaches,
+        "Membership": IconFitMembership,
+        "Schedule":   IconFitSchedule,
+      },
+      skin: {
+        "Home":       IconSkinHome,
+        "Treatments": IconSkinTreatments,
+        "Products":   IconSkinProducts,
+        "Rituals":    IconSkinRituals,
+        "Book":       IconSkinBook,
+      },
+    };
+
+    /* =========================================================
+       3 BUSINESSES
+       ========================================================= */
+    const BRANDS = [
+      {
+        id: "pizza",
+        name: "Bruno's",
+        sector: "Neapolitan Pizzeria",
+        tagline: "Naples in every bite since 1998.",
+        accent: "#d1382c",
+        accentSoft: "#ffe4dc",
+        dark: "#2a1310",
+        light: "#fff8ee",
+        text: "#2a1310",
+        muted: "#8a6a5a",
+        font: "'Bricolage Grotesque', sans-serif",
+        fontMono: "'JetBrains Mono', monospace",
+        layout: "menu",
+        routes: ["Home", "Our Story", "Locations", "Reservations"],
+      },
+      {
+        id: "fit",
+        name: "Kinetic",
+        sector: "Performance Training",
+        tagline: "Train like your life depends on it.",
+        accent: "#e6ff2a",
+        accentSoft: "#f4ffb8",
+        dark: "#0a0a0a",
+        light: "#0f0f0f",
+        text: "#ffffff",
+        muted: "#7a7a7a",
+        font: "'Space Grotesk', sans-serif",
+        fontMono: "'JetBrains Mono', monospace",
+        layout: "bold",
+        dark_mode: true,
+        routes: ["Home", "Programs", "Coaches"],
+      },
+      {
+        id: "skin",
+        name: "Lumea",
+        sector: "Skincare Studio",
+        tagline: "Skin as it was meant to be.",
+        accent: "#b8899b",
+        accentSoft: "#f7e9ee",
+        dark: "#3d2c35",
+        light: "#fdf8f9",
+        text: "#3d2c35",
+        muted: "#8a7680",
+        font: "'Instrument Serif', serif",
+        fontMono: "'JetBrains Mono', monospace",
+        layout: "soft",
+        routes: ["Home", "Treatments"],
+      },
+    ];
+
+    /* =========================================================
+       SIDEBAR NAVIGATION (Desktop)
+       ========================================================= */
+    function Sidebar({ brands, activeBrand, onSwitchBrand, activeRoute, onRouteChange, brand }) {
+      return (
+        <aside
+          className="desktop-sidebar"
+          style={{
+            position: "fixed",
+            left: 0,
+            top: 0,
+            bottom: 0,
+            width: 280,
+            background: brand.dark_mode ? "#000" : brand.light,
+            color: brand.dark_mode ? "#fff" : brand.text,
+            borderRight: `10px solid ${brand.dark_mode ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}`,
+            padding: "32px 24px",
+            display: "flex",
+            flexDirection: "column",
+            zIndex: 100,
+            overflowY: "auto",
+          }}
+        >
+          <button
+            onClick={() => onRouteChange(brand.routes[0])}
+            style={{
+              fontFamily: brand.font,
+              fontSize: "1.9rem",
+              fontWeight: 600,
+              letterSpacing: "-0.03em",
+              color: brand.dark_mode ? "#fff" : brand.text,
+              textAlign: "left",
+              lineHeight: 1,
+              marginBottom: 4,
+            }}
+          >
+            {brand.name}
+          </button>
+          <div
+            style={{
+              fontFamily: brand.fontMono,
+              fontSize: "0.65rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: brand.muted,
+              marginBottom: 40,
+            }}
+          >
+            {brand.sector} · Est. 1998
+          </div>
+
+          <nav style={{ display: "flex", flexDirection: "column", gap: 2, marginBottom: 40 }}>
+            {brand.routes.map((route) => {
+              const isActive = activeRoute === route;
+              const IconComponent = NAV_ICONS[brand.id] && NAV_ICONS[brand.id][route];
+              return (
+                <button
+                  key={route}
+                  onClick={() => onRouteChange(route)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 14,
+                    padding: "12px 14px",
+                    borderRadius: 10,
+                    background: isActive ? brand.accentSoft : "transparent",
+                    color: isActive ? brand.dark : brand.dark_mode ? "rgba(255,255,255,0.65)" : brand.muted,
+                    fontSize: "0.9rem",
+                    fontWeight: isActive ? 600 : 500,
+                    textAlign: "left",
+                    transition: "all 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) {
+                      e.currentTarget.style.background = brand.dark_mode ? "rgba(255,255,255,0.04)" : "rgba(0,0,0,0.03)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) e.currentTarget.style.background = "transparent";
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 20,
+                      height: 20,
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      flexShrink: 0,
+                      opacity: isActive ? 1 : 0.75,
+                      color: "currentColor",
+                    }}
+                  >
+                    {IconComponent ? <IconComponent /> : null}
+                  </span>
+                  {route}
+                </button>
+              );
+            })}
+          </nav>
+
+          <div
+            style={{
+              height: 1,
+              background: brand.dark_mode ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
+              marginBottom: 24,
+            }}
+          />
+
+          <div
+            style={{
+              fontFamily: brand.fontMono,
+              fontSize: "0.6rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: brand.muted,
+              marginBottom: 14,
+            }}
+          >
+            Our Divisions
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+            {brands.map((b) => {
+              const isActive = b.id === activeBrand;
+              const logoSrc = BRAND_LOGOS[b.id];
+              return (
+                <button
+                  key={b.id}
+                  onClick={() => onSwitchBrand(b.id)}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 12,
+                    padding: "8px 12px",
+                    borderRadius: 8,
+                    background: isActive ? (b.dark_mode ? "#1a1a1a" : "rgba(0,0,0,0.03)") : "transparent",
+                    transition: "all 0.2s",
+                    textAlign: "left",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (!isActive) e.currentTarget.style.background = b.dark_mode ? "#141414" : "rgba(0,0,0,0.03)";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (!isActive) e.currentTarget.style.background = "transparent";
+                  }}
+                >
+                  <img
+                    src={logoSrc}
+                    alt={b.name}
+                    style={{
+                      width: 28,
+                      height: 28,
+                      borderRadius: 8,
+                      objectFit: "cover",
+                      flexShrink: 0,
+                    }}
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div
+                      style={{
+                        fontFamily: b.font,
+                        fontSize: "0.92rem",
+                        fontWeight: 500,
+                        color: brand.dark_mode ? "#fff" : brand.text,
+                        lineHeight: 1.2,
+                        whiteSpace: "nowrap",
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                      }}
+                    >
+                      {b.name}
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: brand.fontMono,
+                        fontSize: "0.58rem",
+                        letterSpacing: "0.15em",
+                        textTransform: "uppercase",
+                        color: brand.muted,
+                        marginTop: 2,
+                      }}
+                    >
+                      {b.sector}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          <div style={{ marginTop: "auto", paddingTop: 32 }}>
+            <button
+              style={{
+                width: "100%",
+                padding: "14px 20px",
+                background: brand.accent,
+                color: brand.dark,
+                borderRadius: 10,
+                fontSize: "0.82rem",
+                fontWeight: 600,
+                letterSpacing: "0.03em",
+                textTransform: "uppercase",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                transition: "all 0.2s",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
+              onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+            >
+              Get in touch <i className="fas fa-arrow-right" />
+            </button>
+            <div
+              style={{
+                fontFamily: brand.fontMono,
+                fontSize: "0.58rem",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: brand.muted,
+                marginTop: 16,
+                textAlign: "center",
+              }}
+            >
+              © 2026 {brand.name}
+            </div>
+          </div>
+        </aside>
+      );
+    }
+
+    /* =========================================================
+       MOBILE TOP BAR
+       ========================================================= */
+    function MobileTopBar({ brands, activeBrand, onSwitchBrand, activeRoute, onRouteChange, brand }) {
+      const [open, setOpen] = useState(false);
+      return (
+        <>
+          <div
+            className="mobile-topbar"
+            style={{
+              position: "sticky",
+              top: 0,
+              zIndex: 100,
+              background: brand.dark_mode ? "#000" : brand.light,
+              color: brand.dark_mode ? "#fff" : brand.text,
+              padding: "16px 20px",
+              alignItems: "center",
+              justifyContent: "space-between",
+              borderBottom: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.06)"}`,
+            }}
+          >
+            <button
+              onClick={() => onRouteChange(brand.routes[0])}
+              style={{
+                fontFamily: brand.font,
+                fontSize: "1.5rem",
+                fontWeight: 600,
+                color: brand.dark_mode ? "#fff" : brand.text,
+                letterSpacing: "-0.03em",
+              }}
+            >
+              {brand.name}
+            </button>
+            <button
+              onClick={() => setOpen(!open)}
+              style={{
+                width: 40,
+                height: 40,
+                borderRadius: 10,
+                background: brand.accentSoft,
+                color: brand.dark,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "1rem",
+              }}
+            >
+              <i className={`fas ${open ? "fa-times" : "fa-bars"}`} />
+            </button>
+          </div>
+
+          {open && (
+            <div
+              style={{
+                position: "fixed",
+                top: 72,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: brand.dark_mode ? "#000" : brand.light,
+                padding: 20,
+                zIndex: 99,
+                overflowY: "auto",
+              }}
+            >
+              <div style={{ display: "flex", flexDirection: "column", gap: 4, marginBottom: 32 }}>
+                {brand.routes.map((route) => {
+                  const IconComponent = NAV_ICONS[brand.id] && NAV_ICONS[brand.id][route];
+                  return (
+                    <button
+                      key={route}
+                      onClick={() => { onRouteChange(route); setOpen(false); }}
+                      style={{
+                        padding: "14px 16px",
+                        borderRadius: 10,
+                        background: activeRoute === route ? brand.accentSoft : "transparent",
+                        color: activeRoute === route ? brand.dark : brand.dark_mode ? "#fff" : brand.text,
+                        fontSize: "1rem",
+                        fontWeight: 500,
+                        textAlign: "left",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 14,
+                      }}
+                    >
+                      <span
+                        style={{
+                          width: 20,
+                          height: 20,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          flexShrink: 0,
+                          color: "currentColor",
+                        }}
+                      >
+                        {IconComponent ? <IconComponent /> : null}
+                      </span>
+                      {route}
+                    </button>
+                  );
+                })}
+              </div>
+              <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: brand.muted, marginBottom: 16 }}>
+                Switch Division
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                {brands.map((b) => {
+                  const logoSrc = BRAND_LOGOS[b.id];
+                  return (
+                    <button
+                      key={b.id}
+                      onClick={() => { onSwitchBrand(b.id); setOpen(false); }}
+                      style={{
+                        padding: "12px 16px",
+                        borderRadius: 10,
+                        background: b.id === activeBrand ? (b.dark_mode ? "#1a1a1a" : "rgba(0,0,0,0.04)") : "transparent",
+                        textAlign: "left",
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 12,
+                      }}
+                    >
+                      <img
+                        src={logoSrc}
+                        alt={b.name}
+                        style={{ width: 28, height: 28, borderRadius: 8, objectFit: "cover", flexShrink: 0 }}
+                        onError={(e) => (e.currentTarget.style.display = "none")}
+                      />
+                      <div>
+                        <div style={{ fontFamily: b.font, fontSize: "0.95rem", color: brand.dark_mode ? "#fff" : brand.text }}>
+                          {b.name}
+                        </div>
+                        <div style={{ fontFamily: brand.fontMono, fontSize: "0.58rem", letterSpacing: "0.15em", textTransform: "uppercase", color: brand.muted }}>
+                          {b.sector}
+                        </div>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </>
+      );
+    }
+
+    /* =========================================================
+       SHARED UI
+       ========================================================= */
+    function Card({ children, brand, style = {}, hover = true, onClick }) {
+      const [hovered, setHovered] = useState(false);
+      return (
+        <div
+          onClick={onClick}
+          onMouseEnter={() => hover && setHovered(true)}
+          onMouseLeave={() => hover && setHovered(false)}
+          style={{
+            background: brand.dark_mode ? "#151515" : "#ffffff",
+            border: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
+            borderRadius: 20,
+            padding: 28,
+            transition: "all 0.3s cubic-bezier(0.2, 0, 0, 1)",
+            transform: hovered ? "translateY(-4px)" : "translateY(0)",
+            borderColor: hovered ? brand.accent : brand.dark_mode ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)",
+            cursor: onClick ? "pointer" : "default",
+            ...style,
+          }}
+        >
+          {children}
+        </div>
+      );
+    }
+
+    function Eyebrow({ children, brand }) {
+      return (
+        <div
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+            fontFamily: brand.fontMono,
+            fontSize: "0.65rem",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+            color: brand.accent,
+            marginBottom: 16,
+          }}
+        >
+          <span style={{ width: 24, height: 1, background: brand.accent }} />
+          {children}
+        </div>
+      );
+    }
+
+    function Pill({ children, brand }) {
+      return (
+        <span
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 8,
+            padding: "6px 14px",
+            borderRadius: 100,
+            background: brand.dark_mode ? "rgba(255,255,255,0.05)" : brand.accentSoft,
+            color: brand.dark_mode ? "#fff" : brand.dark,
+            fontFamily: brand.fontMono,
+            fontSize: "0.65rem",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+            fontWeight: 500,
+          }}
+        >
+          {children}
+        </span>
+      );
+    }
+
+    function Button({ children, variant = "primary", brand, onClick, full = false, forceWhite = false }) {
+      const [hovered, setHovered] = useState(false);
+      const isPrimary = variant === "primary";
+      const textColor = forceWhite
+        ? "#ffffff"
+        : isPrimary
+        ? brand.dark
+        : brand.dark_mode
+        ? "#fff"
+        : brand.text;
+      return (
+        <button
+          onClick={onClick}
+          onMouseEnter={() => setHovered(true)}
+          onMouseLeave={() => setHovered(false)}
+          style={{
+            padding: "14px 26px",
+            borderRadius: 12,
+            background: isPrimary
+              ? brand.accent
+              : brand.dark_mode
+              ? "rgba(255,255,255,0.06)"
+              : "transparent",
+            color: textColor,
+            border: isPrimary ? "none" : `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)"}`,
+            fontSize: "0.85rem",
+            fontWeight: 600,
+            letterSpacing: "0.02em",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: full ? "space-between" : "center",
+            gap: 10,
+            transition: "all 0.2s",
+            transform: hovered ? "translateY(-2px)" : "translateY(0)",
+            boxShadow: isPrimary && hovered ? `0 10px 24px -10px ${brand.accent}80` : "none",
+            width: full ? "100%" : "auto",
+          }}
+        >
+          {children}
+        </button>
+      );
+    }
+
+    /* =========================================================
+       CART DRAWER COMPONENT
+       ========================================================= */
+    function CartDrawer({ open, onClose, items, onInc, onDec, onRemove, brand }) {
+      // Parse price string like "₹280" into a number
+      const parsePrice = (str) => {
+        const n = String(str).replace(/[^0-9.]/g, "");
+        return parseFloat(n) || 0;
+      };
+
+      // Calculate totals
+      const subtotal = items.reduce(
+        (sum, it) => sum + parsePrice(it.p) * it.qty,
+        0
+      );
+      const tax = Math.round(subtotal * 0.05);
+      const delivery = subtotal > 0 ? 40 : 0;
+      const total = subtotal + tax + delivery;
+
+      // Payment form state
+      const [card, setCard] = useState("");
+      const [expiry, setExpiry] = useState("");
+      const [cvv, setCvv] = useState("");
+      const [placed, setPlaced] = useState(false);
+
+      // Reset confirmation when drawer closes
+      useEffect(() => {
+        if (!open) setPlaced(false);
+      }, [open]);
+
+      if (!open) return null;
+
+      return (
+        <>
+          {/* Backdrop */}
+          <div
+            onClick={onClose}
+            style={{
+              position: "fixed",
+              inset: 0,
+              background: "rgba(0,0,0,0.5)",
+              zIndex: 200,
+              animation: "fadeIn 0.2s ease",
+            }}
+          />
+          {/* Drawer */}
+          <div
+            style={{
+              position: "fixed",
+              top: 0,
+              right: 0,
+              bottom: 0,
+              width: "min(480px, 100vw)",
+              background: brand.light,
+              color: brand.text,
+              zIndex: 201,
+              display: "flex",
+              flexDirection: "column",
+              animation: "slideInRight 0.3s cubic-bezier(0.2, 0, 0, 1)",
+              boxShadow: "-20px 0 60px rgba(0,0,0,0.2)",
+            }}
+          >
+            {/* Header */}
+            <div
+              style={{
+                padding: "24px 28px",
+                borderBottom: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontFamily: brand.fontMono,
+                    fontSize: "0.65rem",
+                    letterSpacing: "0.2em",
+                    textTransform: "uppercase",
+                    color: brand.accent,
+                    marginBottom: 6,
+                  }}
+                >
+                  Your Order
+                </div>
+                <div
+                  style={{
+                    fontFamily: brand.font,
+                    fontSize: "1.5rem",
+                    fontWeight: 700,
+                    color: brand.text,
+                  }}
+                >
+                  {items.length === 0 ? "Cart is empty" : `${items.length} item${items.length > 1 ? "s" : ""}`}
+                </div>
+              </div>
+              <button
+                onClick={onClose}
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderRadius: 10,
+                  background: brand.dark_mode ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
+                  color: brand.text,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  fontSize: "1rem",
+                }}
+              >
+                <i className="fas fa-times" />
+              </button>
+            </div>
+
+            {/* Body — items or empty state */}
+            <div
+              style={{
+                flex: 1,
+                overflowY: "auto",
+                padding: "20px 28px",
+              }}
+            >
+              {placed ? (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "100%",
+                    textAlign: "center",
+                    gap: 20,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 80,
+                      height: 80,
+                      borderRadius: "50%",
+                      background: brand.accent,
+                      color: brand.dark,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: "2rem",
+                    }}
+                  >
+                    <i className="fas fa-check" />
+                  </div>
+                  <h3
+                    style={{
+                      fontFamily: brand.font,
+                      fontSize: "1.8rem",
+                      fontWeight: 700,
+                      color: brand.text,
+                    }}
+                  >
+                    Order placed!
+                  </h3>
+                  <p style={{ color: brand.muted, maxWidth: 320, lineHeight: 1.7 }}>
+                    Thanks for your order. We'll have your pizza ready in about 30 minutes. A confirmation has been sent to your email.
+                  </p>
+                  <Button brand={brand} onClick={onClose}>
+                    Continue browsing
+                  </Button>
+                </div>
+              ) : items.length === 0 ? (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    height: "100%",
+                    textAlign: "center",
+                    gap: 16,
+                    color: brand.muted,
+                  }}
+                >
+                  <i className="fas fa-shopping-bag" style={{ fontSize: "3rem", opacity: 0.3 }} />
+                  <p style={{ fontSize: "0.95rem" }}>Add some pizzas to get started.</p>
+                </div>
+              ) : (
+                <>
+                  {items.map((it) => (
+                    <div
+                      key={it.n}
+                      style={{
+                        display: "flex",
+                        gap: 14,
+                        padding: "16px 0",
+                        borderBottom: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"}`,
+                      }}
+                    >
+                      <div
+                        style={{
+                          width: 72,
+                          height: 72,
+                          borderRadius: 12,
+                          overflow: "hidden",
+                          flexShrink: 0,
+                          background: brand.accentSoft,
+                        }}
+                      >
+                        {it.img && (
+                          <img
+                            src={it.img}
+                            alt={it.n}
+                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                            onError={(e) => (e.currentTarget.style.display = "none")}
+                          />
+                        )}
+                      </div>
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <div
+                          style={{
+                            fontFamily: brand.font,
+                            fontSize: "1rem",
+                            fontWeight: 700,
+                            color: brand.text,
+                            marginBottom: 4,
+                          }}
+                        >
+                          {it.n}
+                        </div>
+                        <div
+                          style={{
+                            fontFamily: brand.fontMono,
+                            fontSize: "0.7rem",
+                            color: brand.accent,
+                            letterSpacing: "0.1em",
+                            marginBottom: 12,
+                          }}
+                        >
+                          {it.p} each
+                        </div>
+                        {/* Quantity controls */}
+                        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                          <button
+                            onClick={() => onDec(it.n)}
+                            style={{
+                              width: 32,
+                              height: 32,
+                              borderRadius: 8,
+                              background: brand.accentSoft,
+                              color: brand.dark,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: "0.85rem",
+                              fontWeight: 700,
+                            }}
+                          >
+                            <i className="fas fa-minus" />
+                          </button>
+                          <span
+                            style={{
+                              fontFamily: brand.fontMono,
+                              fontSize: "0.95rem",
+                              fontWeight: 600,
+                              minWidth: 24,
+                              textAlign: "center",
+                              color: brand.text,
+                            }}
+                          >
+                            {it.qty}
+                          </span>
+                          <button
+                            onClick={() => onInc(it.n)}
+                            style={{
+                              width: 32,
+                              height: 32,
+                              borderRadius: 8,
+                              background: brand.accent,
+                              color: brand.dark,
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              fontSize: "0.85rem",
+                              fontWeight: 700,
+                            }}
+                          >
+                            <i className="fas fa-plus" />
+                          </button>
+                          <button
+                            onClick={() => onRemove(it.n)}
+                            style={{
+                              marginLeft: "auto",
+                              color: brand.muted,
+                              fontSize: "0.85rem",
+                              padding: 6,
+                            }}
+                            title="Remove"
+                          >
+                            <i className="fas fa-trash-alt" />
+                          </button>
+                        </div>
+                      </div>
+                      <div
+                        style={{
+                          fontFamily: brand.font,
+                          fontSize: "1.1rem",
+                          fontWeight: 700,
+                          color: brand.text,
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        ₹{parsePrice(it.p) * it.qty}
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Payment details */}
+                  <div style={{ marginTop: 28 }}>
+                    <div
+                      style={{
+                        fontFamily: brand.fontMono,
+                        fontSize: "0.65rem",
+                        letterSpacing: "0.2em",
+                        textTransform: "uppercase",
+                        color: brand.accent,
+                        marginBottom: 14,
+                      }}
+                    >
+                      Payment Details
+                    </div>
+
+                    <div style={{ display: "grid", gap: 12 }}>
+                      <div>
+                        <label
+                          style={{
+                            display: "block",
+                            fontFamily: brand.fontMono,
+                            fontSize: "0.65rem",
+                            letterSpacing: "0.15em",
+                            textTransform: "uppercase",
+                            color: brand.muted,
+                            marginBottom: 6,
+                          }}
+                        >
+                          Card Number
+                        </label>
+                        <input
+                          value={card}
+                          onChange={(e) => setCard(e.target.value)}
+                          placeholder="4242 4242 4242 4242"
+                          style={{
+                            width: "100%",
+                            padding: "12px 14px",
+                            borderRadius: 10,
+                            border: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.12)"}`,
+                            background: brand.dark_mode ? "#0f0f0f" : "#ffffff",
+                            color: brand.text,
+                            fontSize: "0.95rem",
+                            outline: "none",
+                          }}
+                        />
+                      </div>
+                      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                        <div>
+                          <label
+                            style={{
+                              display: "block",
+                              fontFamily: brand.fontMono,
+                              fontSize: "0.65rem",
+                              letterSpacing: "0.15em",
+                              textTransform: "uppercase",
+                              color: brand.muted,
+                              marginBottom: 6,
+                            }}
+                          >
+                            Expiry
+                          </label>
+                          <input
+                            value={expiry}
+                            onChange={(e) => setExpiry(e.target.value)}
+                            placeholder="MM / YY"
+                            style={{
+                              width: "100%",
+                              padding: "12px 14px",
+                              borderRadius: 10,
+                              border: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.12)"}`,
+                              background: brand.dark_mode ? "#0f0f0f" : "#ffffff",
+                              color: brand.text,
+                              fontSize: "0.95rem",
+                              outline: "none",
+                            }}
+                          />
+                        </div>
+                        <div>
+                          <label
+                            style={{
+                              display: "block",
+                              fontFamily: brand.fontMono,
+                              fontSize: "0.65rem",
+                              letterSpacing: "0.15em",
+                              textTransform: "uppercase",
+                              color: brand.muted,
+                              marginBottom: 6,
+                            }}
+                          >
+                            CVV
+                          </label>
+                          <input
+                            value={cvv}
+                            onChange={(e) => setCvv(e.target.value)}
+                            placeholder="123"
+                            maxLength={4}
+                            style={{
+                              width: "100%",
+                              padding: "12px 14px",
+                              borderRadius: 10,
+                              border: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.12)"}`,
+                              background: brand.dark_mode ? "#0f0f0f" : "#ffffff",
+                              color: brand.text,
+                              fontSize: "0.95rem",
+                              outline: "none",
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+
+            {/* Footer — totals + Place Order */}
+            {!placed && items.length > 0 && (
+              <div
+                style={{
+                  padding: "20px 28px 24px",
+                  borderTop: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
+                  background: brand.dark_mode ? "#0a0a0a" : "#faf7f2",
+                }}
+              >
+                <div style={{ display: "grid", gap: 8, marginBottom: 16 }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: brand.muted }}>
+                    <span>Subtotal</span>
+                    <span>₹{subtotal}</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: brand.muted }}>
+                    <span>Tax (5%)</span>
+                    <span>₹{tax}</span>
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.9rem", color: brand.muted }}>
+                    <span>Delivery</span>
+                    <span>₹{delivery}</span>
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      paddingTop: 12,
+                      borderTop: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)"}`,
+                      fontFamily: brand.font,
+                      fontSize: "1.3rem",
+                      fontWeight: 700,
+                      color: brand.text,
+                    }}
+                  >
+                    <span>Total</span>
+                    <span>₹{total}</span>
+                  </div>
+                </div>
+                <Button
+                  brand={brand}
+                  full
+                  onClick={() => setPlaced(true)}
+                >
+                  Place Order · ₹{total} <i className="fas fa-arrow-right" />
+                </Button>
+              </div>
+            )}
+          </div>
+        </>
+      );
+    }
+
+    /* =========================================================
+       BUSINESS 1 — PIZZERIA ("Bruno's")
+       ========================================================= */
+    function PizzaHome({ brand }) {
+      const cfg = DIVISION_CONFIG.pizza.home;
+
+      const [selectedIndex, setSelectedIndex] = useState(null);
+      const [cartOpen, setCartOpen] = useState(false);
+      const [cartItems, setCartItems] = useState([]);
+
+      const selectedDish = selectedIndex !== null ? cfg.dishes[selectedIndex] : null;
+
+      const featuredData = selectedDish
+        ? {
+            ...cfg.featured,
+            tag: "Pizza of the Week",
+            title: selectedDish.n,
+            description: selectedDish.d,
+            price: selectedDish.p,
+            size: '12"',
+            image: selectedDish.img || cfg.featured.image,
+          }
+        : cfg.featured;
+
+      /* ★ Cart helpers */
+      const addToCart = (dish) => {
+        setCartItems((prev) => {
+          const existing = prev.find((it) => it.n === dish.n);
+          if (existing) {
+            return prev.map((it) =>
+              it.n === dish.n ? { ...it, qty: it.qty + 1 } : it
+            );
+          }
+          return [...prev, { n: dish.n, p: dish.p, img: dish.img, qty: 1 }];
+        });
+        setCartOpen(true);
+      };
+
+      const incItem = (name) =>
+        setCartItems((prev) =>
+          prev.map((it) => (it.n === name ? { ...it, qty: it.qty + 1 } : it))
+        );
+
+      const decItem = (name) =>
+        setCartItems((prev) =>
+          prev
+            .map((it) => (it.n === name ? { ...it, qty: it.qty - 1 } : it))
+            .filter((it) => it.qty > 0)
+        );
+
+      const removeItem = (name) =>
+        setCartItems((prev) => prev.filter((it) => it.n !== name));
+
+      const totalQty = cartItems.reduce((s, it) => s + it.qty, 0);
+
+      return (
+        <>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20 }}>
+            <Card brand={brand} style={{ padding: 48, minHeight: 400, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <Eyebrow brand={brand}>{cfg.eyebrow}</Eyebrow>
+                <h1 style={{ fontFamily: brand.font, fontSize: "clamp(2.6rem, 5vw, 4.4rem)", fontWeight: 700, lineHeight: 1.02, letterSpacing: "-0.03em", color: brand.text, marginBottom: 20 }}>
+                  {cfg.heroTitle.split(cfg.heroTitleItalic).map((part, i, arr) => (
+                    <React.Fragment key={i}>
+                      {part}
+                      {i < arr.length - 1 && (
+                        <em style={{ fontStyle: "italic", color: brand.accent }}>{cfg.heroTitleItalic}</em>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </h1>
+                <p style={{ fontSize: "1.05rem", color: brand.muted, lineHeight: 1.7, maxWidth: 480 }}>
+                  {cfg.heroSubtitle}
+                </p>
+              </div>
+              <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 32 }}>
+                <Button brand={brand}>{cfg.primaryButton} <i className="fas fa-arrow-right" /></Button>
+                {/* ★ Order Now — opens the cart drawer */}
+                <button
+                  onClick={() => setCartOpen(true)}
+                  style={{
+                    position: "relative",
+                    padding: "14px 26px",
+                    borderRadius: 12,
+                    background: "transparent",
+                    color: brand.text,
+                    border: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)"}`,
+                    fontSize: "0.85rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.02em",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 10,
+                    transition: "all 0.2s",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                    e.currentTarget.style.borderColor = brand.accent;
+                    e.currentTarget.style.color = brand.accent;
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.borderColor = brand.dark_mode ? "rgba(255,255,255,0.15)" : "rgba(0,0,0,0.1)";
+                    e.currentTarget.style.color = brand.text;
+                  }}
+                >
+                  <i className="fas fa-shopping-bag" />
+                  {cfg.secondaryButton}
+                  {totalQty > 0 && (
+                    <span
+                      style={{
+                        background: brand.accent,
+                        color: brand.dark,
+                        borderRadius: 100,
+                        fontSize: "0.7rem",
+                        fontWeight: 700,
+                        padding: "2px 8px",
+                        marginLeft: 4,
+                      }}
+                    >
+                      {totalQty}
+                    </span>
+                  )}
+                </button>
+              </div>
+            </Card>
+
+<Card
+  brand={brand}
+  style={{
+    background: brand.dark,
+    color: "#fff",
+    borderColor: brand.dark,
+    padding: 0,
+    overflow: "hidden",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    minHeight: 500,
+  }}
+>
+  {(() => {
+    const offsetX = featuredData.offsetX;
+    const offsetY = featuredData.offsetY;
+    const zoom = featuredData.zoom;
+
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: 260,
+          overflow: "hidden",
+          position: "relative",
+          flexShrink: 0,
+        }}
+      >
+        <img
+          key={featuredData.image}
+          src={featuredData.image}
+          alt={featuredData.title}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            display: "block",
+            transform: `translate(${offsetX}px, ${offsetY}px) scale(${zoom})`,
+            transformOrigin: "center center",
+            transition: "transform 0.3s ease, opacity 0.35s ease",
+            willChange: "transform",
+            animation: "fadeInImg 0.4s ease",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            pointerEvents: "none",
+          }}
+        />
+      </div>
+    );
+  })()}
+
+  <div
+    style={{
+      padding: 48,
+      paddingTop: 32,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      flex: 1,
+    }}
+  >
+    <div>
+      <div
+        style={{
+          fontFamily: brand.fontMono,
+          fontSize: "0.65rem",
+          letterSpacing: "0.2em",
+          textTransform: "uppercase",
+          color: brand.accent,
+          marginBottom: 24,
+        }}
+      >
+        {featuredData.tag}
+      </div>
+      <h2
+        style={{
+          fontFamily: brand.font,
+          fontSize: "2.4rem",
+          fontWeight: 700,
+          color: "#fff",
+          lineHeight: 1.05,
+          letterSpacing: "-0.02em",
+          marginBottom: 16,
+        }}
+      >
+        {featuredData.title}
+      </h2>
+      <p
+        style={{
+          fontSize: "0.95rem",
+          color: "rgba(255,255,255,0.7)",
+          lineHeight: 1.7,
+          marginBottom: 20,
+        }}
+      >
+        {featuredData.description}
+      </p>
+    </div>
+    <div style={{ display: "flex", alignItems: "baseline", gap: 8 }}>
+      <span
+        style={{
+          fontFamily: brand.font,
+          fontSize: "3rem",
+          fontWeight: 700,
+          color: brand.accent,
+          lineHeight: 1,
+        }}
+      >
+        {featuredData.price}
+      </span>
+      <span
+        style={{
+          fontFamily: brand.fontMono,
+          fontSize: "0.72rem",
+          color: "rgba(255,255,255,0.5)",
+          letterSpacing: "0.1em",
+        }}
+      >
+        · {featuredData.size}
+      </span>
+    </div>
+  </div>
+</Card>
+          </div>
+
+          <div style={{ marginBottom: 20 }}>
+            <Eyebrow brand={brand}>{cfg.sectionEyebrow}</Eyebrow>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20, marginTop: 8 }}>
+              {cfg.dishes.map((p, i) => {
+                const isSelected = selectedIndex === i;
+                return (
+                  <Card
+                    key={p.n}
+                    brand={brand}
+                    onClick={() => setSelectedIndex(isSelected ? null : i)}
+                    style={{
+                      borderColor: isSelected ? brand.accent : undefined,
+                      background: isSelected
+                        ? (brand.dark_mode ? "rgba(255,255,255,0.04)" : brand.accentSoft)
+                        : undefined,
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
+                      <h3 style={{ fontFamily: brand.font, fontSize: "1.25rem", fontWeight: 700, color: brand.text }}>
+                        {p.n}
+                      </h3>
+                      <span style={{ fontFamily: brand.font, fontSize: "1.1rem", fontWeight: 700, color: brand.accent }}>{p.p}</span>
+                    </div>
+                    {p.tag && (
+                      <div
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 6,
+                          fontFamily: brand.fontMono,
+                          fontSize: "0.6rem",
+                          letterSpacing: "0.15em",
+                          textTransform: "uppercase",
+                          color: p.tag === "Non-Veg" ? "#a63a2b" : "#3f7a3f",
+                          padding: "3px 1px",
+                          borderRadius: 100,
+                          marginBottom: 10,
+                        }}
+                      >
+                        {p.tag}
+                      </div>
+                    )}
+                    <p style={{ color: brand.muted, fontSize: "0.88rem", lineHeight: 1.6, marginBottom: 16 }}>{p.d}</p>
+                    {/* ★ Add to Cart button */}
+                    <button
+                      onClick={(e) => { e.stopPropagation(); addToCart(p); }}
+                      style={{
+                        marginTop: "auto",
+                        padding: "10px 16px",
+                        borderRadius: 10,
+                        background: brand.accent,
+                        color: brand.dark,
+                        fontSize: "0.82rem",
+                        fontWeight: 700,
+                        letterSpacing: "0.03em",
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: 8,
+                        transition: "all 0.2s",
+                      }}
+                      onMouseEnter={(e) => (e.currentTarget.style.transform = "translateY(-2px)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+                    >
+                      <i className="fas fa-plus" /> Add to Cart
+                    </button>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 20 }}>
+            {cfg.infoCards.map((c) => (
+              <Card key={c.t} brand={brand}>
+                <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.15em", color: brand.accent, marginBottom: 12 }}>
+                  ●
+                </div>
+                <h3 style={{ fontFamily: brand.font, fontSize: "1.15rem", fontWeight: 600, color: brand.text, marginBottom: 6 }}>
+                  {c.t}
+                </h3>
+                <p style={{ color: brand.muted, fontSize: "0.88rem", lineHeight: 1.6 }}>{c.d}</p>
+              </Card>
+            ))}
+          </div>
+
+          {/* ★ Cart Drawer */}
+          <CartDrawer
+            open={cartOpen}
+            onClose={() => setCartOpen(false)}
+            items={cartItems}
+            onInc={incItem}
+            onDec={decItem}
+            onRemove={removeItem}
+            brand={brand}
+          />
+        </>
+      );
+    }
+
+    function PizzaPage({ route, brand }) {
+      const pages = DIVISION_CONFIG.pizza.pages || {};
+      const items = pages[route] || [];
+
+      const heroTitle =
+        route === "Our Story" && "Three generations on the same corner."
+        || route === "Locations" && "Find us in India."
+        || route === "Reservations" && "Save your table."
+        || "";
+
+      return (
+        <div>
+          <Eyebrow brand={brand}>{route}</Eyebrow>
+          <h1 style={{ fontFamily: brand.font, fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 700, color: brand.text, marginBottom: 20, lineHeight: 1.05, letterSpacing: "-0.02em" }}>
+            {heroTitle}
+          </h1>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20, marginTop: 32 }}>
+            {items.map((item, i) => (
+              <Card key={i} brand={brand}>
+                <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.15em", color: brand.accent, marginBottom: 12 }}>
+                  / {String(i + 1).padStart(2, "0")}
+                </div>
+                <h3 style={{ fontFamily: brand.font, fontSize: "1.3rem", fontWeight: 700, color: brand.text, marginBottom: 10 }}>
+                  {item.n}
+                </h3>
+                <p style={{ color: brand.muted, fontSize: "0.9rem", lineHeight: 1.7 }}>
+                  {item.d}
+                </p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    /* =========================================================
+       BUSINESS 2 — PERFORMANCE TRAINING ("Kinetic")
+       ========================================================= */
+    function FitHome({ brand }) {
+      const cfg = DIVISION_CONFIG.fit.home;
+      const titleParts = cfg.heroTitle.split(cfg.heroTitleAccent);
+      return (
+        <>
+          <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 20, marginBottom: 20 }}>
+            <Card brand={brand} style={{ padding: 48, minHeight: 440, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <h1 style={{ fontFamily: brand.font, fontSize: "clamp(2.6rem, 5.5vw, 4.8rem)", fontWeight: 700, lineHeight: 0.98, letterSpacing: "-0.04em", color: brand.text, marginTop: 20, marginBottom: 20 }}>
+                  {titleParts.map((part, i, arr) => (
+                    <React.Fragment key={i}>
+                      {part}
+                      {i < arr.length - 1 && <span style={{ color: brand.accent }}>{cfg.heroTitleAccent}</span>}
+                    </React.Fragment>
+                  ))}
+                </h1>
+                <p style={{ fontSize: "1.05rem", color: brand.muted, lineHeight: 1.7, maxWidth: 480 }}>
+                  {cfg.heroSubtitle}
+                </p>
+              </div>
+              <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 32 }}>
+                <Button brand={brand}>{cfg.primaryButton} <i className="fas fa-arrow-right" /></Button>
+                <Button brand={brand} variant="outline">{cfg.secondaryButton}</Button>
+              </div>
+            </Card>
+
+            <div style={{ display: "grid", gridTemplateRows: "1fr 1fr", gap: 20 }}>
+              <Card brand={brand} style={{ background: brand.accent, borderColor: brand.accent, color: "#0a0a0a" }}>
+                <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(0,0,0,0.5)", marginBottom: 12 }}>
+                  {cfg.statTop.label}
+                </div>
+                <div style={{ fontFamily: brand.font, fontSize: "4rem", fontWeight: 700, color: "#0a0a0a", lineHeight: 1 }}>
+                  {cfg.statTop.value}
+                </div>
+                <p style={{ fontSize: "0.85rem", color: "rgba(0,0,0,0.6)", marginTop: 8 }}>
+                  {cfg.statTop.sub}
+                </p>
+              </Card>
+              <Card brand={brand}>
+                <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: brand.accent, marginBottom: 12 }}>
+                  {cfg.statBottom.label}
+                </div>
+                <div style={{ fontFamily: brand.font, fontSize: "4rem", fontWeight: 700, color: brand.text, lineHeight: 1 }}>
+                  {cfg.statBottom.value}
+                </div>
+                <p style={{ fontSize: "0.85rem", color: brand.muted, marginTop: 8 }}>
+                  {cfg.statBottom.sub}
+                </p>
+              </Card>
+            </div>
+          </div>
+
+          <div style={{ marginBottom: 20 }}>
+            <Eyebrow brand={brand}>{cfg.sectionEyebrow}</Eyebrow>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 20, marginTop: 8 }}>
+              {cfg.programs.map((p) => (
+                <Card key={p.t} brand={brand}>
+                  <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.2em", color: brand.accent, marginBottom: 20 }}>
+                    / {p.n}
+                  </div>
+                  <h3 style={{ fontFamily: brand.font, fontSize: "1.4rem", fontWeight: 700, color: brand.text, marginBottom: 10 }}>
+                    {p.t}
+                  </h3>
+                  <p style={{ color: brand.muted, fontSize: "0.88rem", lineHeight: 1.6 }}>{p.d}</p>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          <Card brand={brand} style={{ padding: 40, background: brand.accent, borderColor: brand.accent }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 20 }}>
+              <div>
+                <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: "rgba(0,0,0,0.5)", marginBottom: 8 }}>
+                  {cfg.cta.tagline}
+                </div>
+                <div style={{ fontFamily: brand.font, fontSize: "2rem", fontWeight: 700, color: "#0a0a0a", letterSpacing: "-0.02em" }}>
+                  {cfg.cta.headline}
+                </div>
+              </div>
+              <Button brand={{ ...brand, accent: "#0a0a0a" }} style={{}} forceWhite>
+                {cfg.cta.button} <i className="fas fa-arrow-right" />
+              </Button>
+            </div>
+          </Card>
+        </>
+      );
+    }
+
+    function FitPage({ route, brand }) {
+      const pages = DIVISION_CONFIG.fit.pages || {};
+      const items = pages[route] || [];
+
+      const heroTitle =
+        route === "Programs" && "Pick your path."
+        || route === "Coaches" && "The people who'll push you."
+        || route === "Membership" && "Simple plans, no gimmicks."
+        || route === "Schedule" && "This week at Kinetic."
+        || "";
+
+      if (items.length > 0) {
+        return (
+          <div>
+            <Eyebrow brand={brand}>{route}</Eyebrow>
+            <h1 style={{ fontFamily: brand.font, fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 700, color: brand.text, marginBottom: 20, lineHeight: 1.02, letterSpacing: "-0.03em" }}>
+              {heroTitle}
+            </h1>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20, marginTop: 32 }}>
+              {items.map((item, i) => (
+                <Card key={i} brand={brand}>
+                  <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.2em", color: brand.accent, marginBottom: 12 }}>
+                    / {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <h3 style={{ fontFamily: brand.font, fontSize: "1.4rem", fontWeight: 700, color: brand.text, marginBottom: 6 }}>
+                    {item.n}
+                  </h3>
+                  {item.role && (
+                    <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.15em", textTransform: "uppercase", color: brand.accent, marginBottom: 12 }}>
+                      {item.role}
+                    </div>
+                  )}
+                  {item.d && (
+                    <div style={{ fontFamily: brand.fontMono, fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", color: brand.accent, marginBottom: 14 }}>
+                      {item.d}
+                    </div>
+                  )}
+                  <p style={{ color: brand.muted, fontSize: "0.9rem", lineHeight: 1.7 }}>
+                    {item.long || item.d}
+                  </p>
+                </Card>
+              ))}
+            </div>
+          </div>
+        );
+      }
+
+      return (
+        <div>
+          <Eyebrow brand={brand}>{route}</Eyebrow>
+          <h1 style={{ fontFamily: brand.font, fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 700, color: brand.text, marginBottom: 20, lineHeight: 1.02, letterSpacing: "-0.03em" }}>
+            {heroTitle}
+          </h1>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20, marginTop: 32 }}>
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <Card key={i} brand={brand}>
+                <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.2em", color: brand.accent, marginBottom: 20 }}>
+                  / {String(i).padStart(2, "0")}
+                </div>
+                <h3 style={{ fontFamily: brand.font, fontSize: "1.3rem", fontWeight: 700, color: brand.text, marginBottom: 10 }}>
+                  {route} {i}
+                </h3>
+                <p style={{ color: brand.muted, fontSize: "0.9rem", lineHeight: 1.7 }}>
+                  Details for this item, written with the directness of a training plan.
+                </p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    /* =========================================================
+       BUSINESS 3 — SKINCARE ("Lumea")
+       ========================================================= */
+    function SkinHome({ brand }) {
+      const cfg = DIVISION_CONFIG.skin.home;
+
+      const [selectedTreatment, setSelectedTreatment] = useState(null);
+
+      const seasonData = selectedTreatment
+        ? {
+            ...cfg.season,
+            title: selectedTreatment.t,
+            description: selectedTreatment.d,
+            img: selectedTreatment.img || cfg.season.img,
+            tag: "Selected Treatment",
+            link: `${selectedTreatment.p} · ${cfg.season.link}`,
+          }
+        : cfg.season;
+
+      return (
+        <>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 20 }}>
+            <Card brand={brand} style={{ padding: 48, minHeight: 400, display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+              <div>
+                <Eyebrow brand={brand}>{cfg.eyebrow}</Eyebrow>
+                <h1 style={{ fontFamily: brand.font, fontSize: "clamp(2.4rem, 5vw, 4.4rem)", fontWeight: 400, lineHeight: 1.05, letterSpacing: "-0.02em", color: brand.text, marginBottom: 20 }}>
+                  {cfg.heroTitle}
+                </h1>
+                <p style={{ fontSize: "1.05rem", color: brand.muted, lineHeight: 1.75, maxWidth: 460 }}>
+                  {cfg.heroSubtitle}
+                </p>
+              </div>
+              <div style={{ display: "flex", gap: 14, flexWrap: "wrap", marginTop: 32 }}>
+                <Button brand={brand}>{cfg.primaryButton}</Button>
+                <Button brand={brand} variant="outline">{cfg.secondaryButton}</Button>
+              </div>
+            </Card>
+
+            <Card
+              brand={brand}
+              style={{
+                background: brand.accentSoft,
+                borderColor: brand.accentSoft,
+                padding: 0,
+                overflow: "hidden",
+                display: "flex",
+                flexDirection: "column",
+                minHeight: 400,
+              }}
+            >
+              {(() => {
+                const offsetX = 0;
+                const offsetY = 0;
+                const zoom = 1;
+                return (
+                  <div
+                    style={{
+                      width: "100%",
+                      height: 220,
+                      overflow: "hidden",
+                      position: "relative",
+                      flexShrink: 0,
+                    }}
+                  >
+                    <img
+                      key={seasonData.img}
+                      src={seasonData.img}
+                      alt={seasonData.title}
+                      style={{
+                        position: "absolute",
+                        top: 0,
+                        left: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        display: "block",
+                        transform: `translate(${offsetX}px, ${offsetY}px) scale(${zoom})`,
+                        transformOrigin: "center center",
+                        transition: "transform 0.3s ease, opacity 0.35s ease",
+                        willChange: "transform",
+                        animation: "fadeInImg 0.4s ease",
+                      }}
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+                  </div>
+                );
+              })()}
+
+              <div
+                style={{
+                  padding: 48,
+                  paddingTop: 32,
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  flex: 1,
+                }}
+              >
+                <div>
+                  <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: brand.accent, marginBottom: 20 }}>
+                    {seasonData.tag}
+                  </div>
+                  <h2 style={{ fontFamily: brand.font, fontSize: "2rem", fontWeight: 400, color: brand.text, lineHeight: 1.15, marginBottom: 12 }}>
+                    {seasonData.title}
+                  </h2>
+                  <p style={{ fontSize: "0.95rem", color: brand.muted, lineHeight: 1.7 }}>
+                    {seasonData.description}
+                  </p>
+                </div>
+                <div style={{ fontFamily: brand.fontMono, fontSize: "0.72rem", color: brand.accent, letterSpacing: "0.15em", textTransform: "uppercase", marginTop: 20 }}>
+                  {seasonData.link}
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          <div style={{ marginBottom: 20 }}>
+            <Eyebrow brand={brand}>{cfg.sectionEyebrow}</Eyebrow>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20, marginTop: 8 }}>
+              {cfg.treatments.map((t, i) => {
+                const isSelected = selectedTreatment && selectedTreatment.t === t.t;
+                return (
+                  <Card
+                    key={t.t}
+                    brand={brand}
+                    onClick={() => setSelectedTreatment(isSelected ? null : t)}
+                    style={{
+                      borderColor: isSelected ? brand.accent : undefined,
+                      background: isSelected
+                        ? (brand.dark_mode ? "rgba(255,255,255,0.04)" : brand.accentSoft)
+                        : undefined,
+                    }}
+                  >
+                    <h3 style={{ fontFamily: brand.font, fontSize: "1.35rem", fontWeight: 400, color: brand.text, marginBottom: 8 }}>
+                      {t.t}
+                    </h3>
+                    <p style={{ color: brand.muted, fontSize: "0.88rem", lineHeight: 1.65, marginBottom: 20 }}>
+                      {t.d}
+                    </p>
+                    <div style={{ fontFamily: brand.font, fontSize: "1.5rem", color: brand.accent }}>
+                      {t.p}
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr 1fr", gap: 20 }}>
+            {cfg.products.map((p) => (
+              <Card key={p.n} brand={brand} style={{ textAlign: "center", padding: 24 }}>
+                <div
+                  style={{
+                    width: "100%",
+                    aspectRatio: 1,
+                    borderRadius: 12,
+                    overflow: "hidden",
+                    background: `linear-gradient(135deg, ${brand.accentSoft} 0%, ${brand.accent} 100%)`,
+                    marginBottom: 16,
+                    position: "relative",
+                  }}
+                >
+                  <img
+                    src={p.img}
+                    alt={p.n}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      display: "block",
+                    }}
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                </div>
+                <div style={{ fontFamily: brand.font, fontSize: "1rem", color: brand.text }}>{p.n}</div>
+              </Card>
+            ))}
+          </div>
+        </>
+      );
+    }
+
+    function SkinPage({ route, brand }) {
+      const pages = DIVISION_CONFIG.skin.pages || {};
+      const items = pages[route] || [];
+
+      const heroTitle =
+        route === "Treatments" && "Facials, rituals, and quiet time for your skin."
+        || route === "Products" && "Hand-blended in small batches."
+        || route === "Rituals" && "Small, daily practices for happy skin."
+        || route === "Book" && "Find a time that suits you."
+        || "";
+
+      return (
+        <div>
+          <Eyebrow brand={brand}>{route}</Eyebrow>
+          <h1 style={{ fontFamily: brand.font, fontSize: "clamp(2.4rem, 5vw, 4rem)", fontWeight: 400, color: brand.text, marginBottom: 20, lineHeight: 1.05 }}>
+            {heroTitle}
+          </h1>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 20, marginTop: 32 }}>
+            {items.map((item, i) => (
+              <Card key={i} brand={brand}>
+                <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.15em", color: brand.accent, marginBottom: 12 }}>
+                  / {String(i + 1).padStart(2, "0")}
+                </div>
+                <h3 style={{ fontFamily: brand.font, fontSize: "1.4rem", fontWeight: 400, color: brand.text, marginBottom: 8 }}>
+                  {item.n}
+                </h3>
+                <div style={{ fontFamily: brand.fontMono, fontSize: "0.7rem", letterSpacing: "0.12em", textTransform: "uppercase", color: brand.accent, marginBottom: 14 }}>
+                  {item.d}
+                </div>
+                <p style={{ color: brand.muted, fontSize: "0.92rem", lineHeight: 1.75 }}>
+                  {item.long}
+                </p>
+              </Card>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    /* =========================================================
+       FOOTER
+       ========================================================= */
+    function Footer({ brand }) {
+      return (
+        <footer
+          style={{
+            marginTop: 60,
+            paddingTop: 40,
+            borderTop: `1px solid ${brand.dark_mode ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"}`,
+            display: "grid",
+            gridTemplateColumns: "2fr 1fr 1fr 1fr",
+            gap: 40,
+            flexWrap: "wrap",
+          }}
+        >
+          <div>
+            <div style={{ fontFamily: brand.font, fontSize: "1.3rem", fontWeight: 600, color: brand.text, marginBottom: 12 }}>
+              {brand.name}
+            </div>
+            <p style={{ color: brand.muted, fontSize: "0.9rem", lineHeight: 1.7, maxWidth: 320 }}>
+              {brand.tagline}
+            </p>
+          </div>
+          {[
+            { t: "Studio", l: ["About", "Team", "Press", "Careers"] },
+            { t: "More", l: ["Journal", "FAQ", "Newsletter", "Contact"] },
+            { t: "Legal", l: ["Privacy", "Terms", "Cookies"] },
+          ].map((col) => (
+            <div key={col.t}>
+              <div style={{ fontFamily: brand.fontMono, fontSize: "0.65rem", letterSpacing: "0.2em", textTransform: "uppercase", color: brand.accent, marginBottom: 16 }}>
+                {col.t}
+              </div>
+              <ul style={{ listStyle: "none", display: "grid", gap: 10 }}>
+                {col.l.map((l) => (
+                  <li key={l}>
+                    <button style={{ color: brand.muted, fontSize: "0.88rem", textAlign: "left" }}>{l}</button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </footer>
+      );
+    }
+
+    /* =========================================================
+       ROUTER
+       ========================================================= */
+    function BrandRouter({ brandId, route }) {
+      const brand = BRANDS.find((b) => b.id === brandId);
+      if (brandId === "pizza") {
+        if (route === "Our Story" || route === "Locations" || route === "Reservations")
+          return <PizzaPage route={route} brand={brand} />;
+        return <PizzaHome brand={brand} />;
+      }
+      if (brandId === "fit") {
+        if (route === "Programs" || route === "Coaches" || route === "Membership" || route === "Schedule")
+          return <FitPage route={route} brand={brand} />;
+        return <FitHome brand={brand} />;
+      }
+      if (brandId === "skin") {
+        if (route === "Treatments" || route === "Products" || route === "Rituals" || route === "Book")
+          return <SkinPage route={route} brand={brand} />;
+        return <SkinHome brand={brand} />;
+      }
+      return null;
+    }
+
+    /* =========================================================
+       APP
+       ========================================================= */
+    function App() {
+      const [activeBrandId, setActiveBrandId] = useState("pizza");
+      const [route, setRoute] = useState("Home");
+
+      const brand = BRANDS.find((b) => b.id === activeBrandId);
+
+      useEffect(() => {
+        setRoute(brand.routes[0]);
+      }, [activeBrandId]);
+
+      useEffect(() => {
+        document.body.style.background = brand.light;
+        document.body.style.color = brand.text;
+        document.body.style.transition = "background 0.4s ease, color 0.4s ease";
+      }, [brand]);
+
+      return (
+        <div style={{ minHeight: "100vh" }}>
+          <Sidebar
+            brands={BRANDS}
+            activeBrand={activeBrandId}
+            onSwitchBrand={setActiveBrandId}
+            activeRoute={route}
+            onRouteChange={setRoute}
+            brand={brand}
+          />
+
+          <MobileTopBar
+            brands={BRANDS}
+            activeBrand={activeBrandId}
+            onSwitchBrand={setActiveBrandId}
+            activeRoute={route}
+            onRouteChange={setRoute}
+            brand={brand}
+          />
+
+          <main
+            className="main-shell"
+            style={{
+              paddingLeft: 280,
+              minHeight: "100vh",
+              background: brand.light,
+              transition: "background 0.4s ease",
+            }}
+          >
+            <div style={{ maxWidth: 1200, margin: "0 auto", padding: "48px 40px 80px" }}>
+              <BrandRouter brandId={activeBrandId} route={route} />
+              <Footer brand={brand} />
+            </div>
+          </main>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>
